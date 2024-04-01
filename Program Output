@@ -1,0 +1,87 @@
+PROGRAM:
+C Program to print process ID and parent Process ID using Linux API system calls
+
+#include<stdio.h>
+#include<unistd.h>
+
+int main() {
+    pid_t pid = getpid();
+    pid_t ppid = getppid();
+
+    printf("Process ID: %d\n", pid);
+    printf("Parent Process ID: %d\n", ppid);
+
+    return 0;
+}
+
+OUTPUT:
+Process ID: 40204
+Parent Process ID: 40197
+
+
+=== Code Execution Successful ===
+
+C Program to create new process using Linux API system calls fork() and exit()
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+    // Forking a new process
+    pid_t child_pid = fork();
+
+    if (child_pid == -1) {
+        // Fork failed
+        perror("fork");
+        return 1;
+    } else if (child_pid == 0) {
+        // Child process
+        printf("Child process created with PID: %d\n", getpid());
+        // Child process exits with status code 0
+        exit(0);
+    } else {
+        // Parent process
+        printf("Parent process with PID: %d\n", getpid());
+        printf("Waiting for child process to terminate...\n");
+        // Wait for the child process to terminate
+        wait(NULL);
+        printf("Child process terminated\n");
+    }
+
+    return 0;
+}
+
+OUTPUT:
+Parent process with PID: 14327
+Child process created with PID: 14328
+Waiting for child process to terminate...
+Child process terminated
+
+
+=== Code Execution Successful ===
+
+C Program to execute Linux system commands using Linux API system calls exec() family
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main() {
+    // Executing the 'ls' command using execvp()
+    char *args[] = {"/bin/ls", "-l", NULL}; // Specify full path to ls
+    execvp("/bin/ls", args);
+
+    // If execvp() returns, it means there was an error
+    perror("execvp");
+    return 1;
+}
+
+OUTPUT:
+total 0
+
+
+=== Code Execution Successful ===
+
+
